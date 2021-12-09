@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:persian_fonts/persian_fonts.dart';
 import 'package:persian_tools/persian_tools.dart';
 import 'package:provider/provider.dart';
+import '../screens/user_products_screen.dart';
 import '../screens/order_screen.dart';
 import '../screens/cart_screen.dart';
 import '../widgets/badge.dart';
@@ -10,8 +12,13 @@ import '../widgets/main_dreawer.dart';
 
 class MainDreawerSecond extends StatefulWidget {
   final Widget bodyDreawer;
+  final Widget adderButton;
   final String titleDrawer;
-  MainDreawerSecond({required this.bodyDreawer, required this.titleDrawer});
+  MainDreawerSecond({
+    required this.bodyDreawer,
+    required this.titleDrawer,
+    required this.adderButton,
+  });
   @override
   _MainDreawerSecondState createState() => _MainDreawerSecondState();
 }
@@ -42,19 +49,19 @@ class _MainDreawerSecondState extends State<MainDreawerSecond> {
       child: Scaffold(
           appBar: AppBar(
             actions: [
+              widget.adderButton,
               Consumer<Cart>(
-                        builder: (context, cart, ch) => Badge(
-                          child: ch as Widget,
-                          value: cart.itemsCount.toString(),
-                        ),
-                        child: IconButton(
-                          onPressed: () =>
-                              Navigator.of(context).pushNamed('/cart'),
-                          icon: Icon(
-                            Icons.shopping_cart,
-                          ),
-                        ),
-                      ),
+                builder: (context, cart, ch) => Badge(
+                  child: ch as Widget,
+                  value: cart.itemsCount.toString(),
+                ),
+                child: IconButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/cart'),
+                  icon: Icon(
+                    Icons.shopping_cart,
+                  ),
+                ),
+              ),
             ],
             title: Text(widget.titleDrawer),
             backgroundColor: Colors.pink[800],
@@ -84,36 +91,55 @@ class _MainDreawerSecondState extends State<MainDreawerSecond> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
+                  child: Image.network(
+                      'https://avatars.githubusercontent.com/u/60173619?v=4'),
                   width: 128.0,
                   height: 128.0,
                   margin: const EdgeInsets.only(
                     top: 24.0,
-                    bottom: 64.0,
+                    bottom: 20,
                   ),
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    color: Colors.black26,
                     shape: BoxShape.circle,
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('مهدی زارعی',
+                          style: PersianFonts.Samim.copyWith(
+                              color: Colors.white, fontSize: 25)),
+                    ],
+                  ),
+                ),
                 ListTile(
-                    onTap: () {
-                      Navigator.of(context).pushReplacementNamed('/cart');
-                    },
-                    leading: Consumer<Cart>(
-                      builder: (context, cart, ch) => Badge(
-                        child: ch as Widget,
-                        value: cart.itemsCount.toString(),
-                      ),
-                      child: IconButton(
-                        onPressed: () =>
-                            Navigator.of(context).pushNamed('/cart'),
-                        icon: Icon(
-                          Icons.shopping_cart,
-                        ),
-                      ),
+                  onTap: () {
+                    Navigator.of(context).pushReplacementNamed('/cart');
+                  },
+                  leading: Icon(Icons.shopping_cart_rounded),
+                  title: Text('سبد خرید '),
+                  trailing: Container(
+                    alignment: Alignment.center,
+                    width: 25,
+                    height: 25,
+                    child: Consumer<Cart>(
+                        builder: (context, cart, ch) => Text(
+                              convertEnToFa('${cart.itemsCount}'),
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.white,
                     ),
-                    title: Text('سبد خرید ')),
+                  ),
+                ),
                 Divider(
                   color: Colors.black26,
                 ),
@@ -138,7 +164,8 @@ class _MainDreawerSecondState extends State<MainDreawerSecond> {
                   color: Colors.black26,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () => Navigator.of(context)
+                      .pushReplacementNamed(UserProductsScreen.routeName),
                   leading: Icon(Icons.add_shopping_cart_rounded),
                   title: Text('مدیریت محصولات'),
                 ),

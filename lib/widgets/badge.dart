@@ -40,7 +40,7 @@ class _BadgeState extends State<Badge> {
               minWidth: 16,
               minHeight: 16,
             ),
-            child:  Text(
+            child: Text(
               convertEnToFa(widget.value),
               textAlign: TextAlign.center,
               style: TextStyle(

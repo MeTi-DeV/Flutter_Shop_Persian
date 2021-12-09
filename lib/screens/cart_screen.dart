@@ -16,6 +16,7 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     final orderData = Provider.of<Order>(context);
     return MainDreawerSecond(
+      adderButton: Container(),
       bodyDreawer: Scaffold(
         body: cart.items.isEmpty
             ? Center(

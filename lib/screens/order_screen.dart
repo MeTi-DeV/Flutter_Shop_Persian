@@ -11,6 +11,7 @@ class OrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderData = Provider.of<Order>(context);
     return MainDreawerSecond(
+      adderButton: Container(),
       titleDrawer: 'صورتحساب',
       bodyDreawer: Scaffold(
         body: orderData.orders.isEmpty

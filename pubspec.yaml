@@ -41,6 +41,8 @@ dependencies:
   slide_drawer: ^1.0.3
   fancy_drawer: ^2.0.0
   flutter_advanced_drawer: ^1.2.4
+  cached_network_image: ^3.2.0
+  full_screen_image: ^1.0.2
   
 
 dev_dependencies:
