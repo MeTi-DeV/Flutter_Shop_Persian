@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
 import 'package:persian_tools/persian_tools.dart';
-
+import 'package:full_screen_image/full_screen_image.dart';
 class ProductsDetailsScreen extends StatelessWidget {
   static const routeName = 'product-details';
   @override
@@ -12,18 +12,19 @@ class ProductsDetailsScreen extends StatelessWidget {
         Provider.of<Products>(context, listen: false).findById(productsId);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purpleAccent.shade700,
         title: Text(loadProduct.title),
       ),
       body: Column(
         children: [
           Container(
-            height: 240,
+            height: 300,
             width: double.infinity,
-            child: ClipRRect(
-              child: Image.network(
-                loadProduct.imageUrl,
-                fit: BoxFit.cover,
+            child: FullScreenWidget(
+              child: ClipRRect(
+                child: Image.network(
+                  loadProduct.imageUrl,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
           ),
