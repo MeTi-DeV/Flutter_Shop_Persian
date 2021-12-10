@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './product.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -50,14 +52,32 @@ class Products with ChangeNotifier {
   }
 
   void addProduct(Product product) {
-    final newProduct = Product(
-        id: DateTime.now().toString(),
-        imageUrl: product.imageUrl,
-        title: product.title,
-        description: product.description,
-        price: product.price);
-    _items.insert(0, newProduct);
-    notifyListeners();
+    final url = Uri.https(
+        'persianshop-d5e87-default-rtdb.asia-southeast1.firebasedatabase.app',
+        '/product.json');
+    http
+        .post(
+      url,
+      body: json.encode(
+        {
+          "title": product.title,
+          "price": product.price,
+          "imageUrl": product.imageUrl,
+          "description": product.description,
+          "isFavorite": product.isFavorite,
+        },
+      ),
+    )
+        .then((response) {
+      final newProduct = Product(
+          id: json.decode(response.body)['name'],
+          imageUrl: product.imageUrl,
+          title: product.title,
+          description: product.description,
+          price: product.price);
+      _items.insert(0, newProduct);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product product) {
